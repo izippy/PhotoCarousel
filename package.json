@@ -51,6 +51,5 @@
     "path": "^0.12.7",
     "sequelize": "^5.9.3"
   },
-  "devDependencies": {
-  }
+  "devDependencies": {}
 }
