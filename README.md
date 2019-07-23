@@ -6,17 +6,17 @@
 
 CRUD - initial listings
 
-- CREATE / POST: /api/rooms/photos/initial/:listingID
-- READ / GET: /api/rooms/photos/initial/:listingID
-- UPDATE / PUT: /api/rooms/photos/initial/:listingID
-- DELETE / DELETE: /api/rooms/photos/initial/:listingID
+- **CREATE** | **POST**: /api/rooms/photos/initial/:listingID | create a new listings post
+- **READ** | **GET**: /api/rooms/photos/initial/:listingID | read all of the listings
+- **UPDATE** | **PUT**: /api/rooms/photos/initial/:listingID | update a existing listing
+- **DELETE** | **DELETE**: /api/rooms/photos/initial/:listingID | delete a existing listing
 
 CRUD -  prior listings
 
-- CREATE / POST: /api/rooms/photos/:listingID
-- READ / GET: /api/rooms/photos/:listingID
-- UPDATE / PUT: /api/rooms/photos/:listingID
-- DELETE / DELETE: /api/rooms/photos/:listingID
+- **CREATE** | **POST**: /api/rooms/photos/:listingID | create a new listings post
+- **READ** | **GET**: /api/rooms/photos/:listingID | read all of the listings
+- **UPDATE** | **PUT**: /api/rooms/photos/:listingID | update a existing listing
+- **DELETE** | **DELETE**: /api/rooms/photos/:listingID | delete a existing listing
 
 ## Related Projects
 
