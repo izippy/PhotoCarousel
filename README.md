@@ -2,17 +2,19 @@
 
 > Photo Carousel module of Guestly
 
-# CRUD - API Documentation
+## CRUD - API Documentation
 
-CRUD - initial listings
+### CRUD - initial listings
 
+- **USE** | **USE**: /rooms/photoCarousel/:listingID | Rendering of service
 - **CREATE** | **POST**: /api/rooms/photos/initial/:listingID | create a new listings post
 - **READ** | **GET**: /api/rooms/photos/initial/:listingID | read all of the listings
 - **UPDATE** | **PUT**: /api/rooms/photos/initial/:listingID | update a existing listing
 - **DELETE** | **DELETE**: /api/rooms/photos/initial/:listingID | delete a existing listing
 
-CRUD -  prior listings
+### CRUD -  prior listings
 
+- **USE** | **USE**: /rooms/photoCarousel/:listingID | Rendering of service
 - **CREATE** | **POST**: /api/rooms/photos/:listingID | create a new listings post
 - **READ** | **GET**: /api/rooms/photos/:listingID | read all of the listings
 - **UPDATE** | **PUT**: /api/rooms/photos/:listingID | update a existing listing
