@@ -2,8 +2,8 @@ const db = require('./index');
 const faker = require('faker');
 const unsplash = require('../db/unsplashHelper');
 
-let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY, listing_id integer NOT NULL, url text NOT NULL, tinyurl text NOT NULL, description text NOT NULL, priority INTEGER)";
-let listingsSchema = "CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY)";
+let photosSchema = "CREATE TABLE photos (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
+let listingsSchema = "CREATE TABLE listings (id SERIAL PRIMARY KEY)";
 // db.query(photosSchema, (err, res) => {
 //   console.log(err, res);
 //   db.end();
@@ -56,13 +56,3 @@ let createListings = async () => {
 
 createListings();
 generatePhoto();
-
-// db.query('DELETE FROM photos', (err, res) => {
-//   console.log(err, res);
-//   db.end();
-// })
-
-// db.query(`SELECT * FROM photos`, (err, res) => {
-//   console.log(err, res);
-//   db.end();
-// })
