@@ -2,3 +2,5 @@ node_modules
 coverage
 
 unsplashAPI.js
+
+test.csv
