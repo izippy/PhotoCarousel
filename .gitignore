@@ -3,5 +3,6 @@ coverage
 
 unsplashAPI.js
 
-test.csv
+photos.csv
 listings.csv
+cassandraTest.csv
