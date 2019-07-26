@@ -7,7 +7,7 @@ const fs = require('fs');
 let photosSchema = "CREATE TABLE photos (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
 let listingsSchema = "CREATE TABLE listings (id SERIAL PRIMARY KEY)";
 // db.query(photosSchema, (err, res) => {
-  //   console.log(err, res);
+//     console.log(err, res);
 //   db.end();
 // });
 
@@ -16,97 +16,68 @@ let listingsSchema = "CREATE TABLE listings (id SERIAL PRIMARY KEY)";
 //   db.end();
 // });
 
-const generatePhoto = () => {
-  let listing_id = 1;
-
-  let i = 0;
-
-  unsplash.getImages('house', (err, houseData) => {
-    if (err) {
-      console.log(err);
-    } else {
-      while (listing_id <= 100000) {
-        let randomNumber =  Math.floor(Math.random() * Math.floor(29));
-        if (randomNumber < 5) {
-          randomNumber = 5;
-        }
-        
-        for (let priority = 0; priority < randomNumber; priority++) {
-          let randomImage =  Math.floor(Math.random() * Math.floor(29));
-          const photoUrl = houseData.results[randomImage].urls.regular;
-          const tinyPhotoUrl = houseData.results[randomImage].urls.thumb;
-          const caption = faker.lorem.sentence(5);
-          // (DEFAULT, ${listing_id}, '${photoUrl}', '${tinyPhotoUrl}', '${caption}', ${priority})
-          i++;
-          let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
-          if(listing_id % 50000 === 0){
-            console.log(listing_id);
-          }
-          stream.write(data);
-          if(listing_id === 100000){
-            stream.end();
-          }
-        }
-        listing_id += 1;
-      }
-    }
-  });
-};
-
 const write = (writer, data) => {
   if (!writer.write(data)) {
       return new Promise((resolve) => {
-          writer.once('drain', resolve)
+          writer.once('drain', resolve);
       })
   }
 }
 
-const run = () => {
-  const stream = fs.createWriteStream('test.csv')
+// const run = () => {
+//   const stream = fs.createWriteStream('test.csv')
+//   const max = 10000000
+//   let listing_id = 1
+//   let i = 0;
+//   unsplash.getImages('house', async (err, houseData) => {
+//   while (listing_id <= max) {
+//     let randomNumber =  Math.floor(Math.random() * Math.floor(5));
+//         if (randomNumber < 5) {
+//           randomNumber = 5;
+//         }
+        
+//         for (let priority = 0; priority < randomNumber; priority++) {
+//           let randomImage =  Math.floor(Math.random() * Math.floor(5));
+//           const photoUrl = houseData.results[randomImage].urls.regular;
+//           const tinyPhotoUrl = houseData.results[randomImage].urls.thumb;
+//           const caption = faker.lorem.sentence(5);
+//           i++;
+//           let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
+//           if(listing_id % 100000 === 0){
+//             console.log(listing_id);
+//           }
+//           const promise = write(stream, data);
+//           if (promise) {
+//             await promise
+//           }
+//         }
+
+//         listing_id += 1;
+//   }
+// });
+// }
+
+
+let createListings = async () => {
+  const stream2 = fs.createWriteStream('listings.csv')
   const max = 10000000
   let listing_id = 1
   let i = 0;
-  unsplash.getImages('house', async (err, houseData) => {
-  while (listing_id <= max) {
-    let randomNumber =  Math.floor(Math.random() * Math.floor(5));
-        if (randomNumber < 5) {
-          randomNumber = 5;
-        }
-        
-        for (let priority = 0; priority < randomNumber; priority++) {
-          let randomImage =  Math.floor(Math.random() * Math.floor(5));
-          const photoUrl = houseData.results[randomImage].urls.regular;
-          const tinyPhotoUrl = houseData.results[randomImage].urls.thumb;
-          const caption = faker.lorem.sentence(5);
-          i++;
-          let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
-          if(listing_id % 100000 === 0){
-            console.log(listing_id);
-          }
-          const promise = write(stream, data);
-          if (promise) {
-            await promise
-          }
-        }
-
-        listing_id += 1;
-  }
-});
-}
-
-run();
-
-let createListings = async () => {
-  for(var i = 0; i <= 100000; i++){
-    db.query(`INSERT INTO listings VALUES (DEFAULT)`, (err, res) => {
-      if(i === 100000){
-        db.end();
-      }
-    });
+  while(listing_id <= max){
+    let data = `${listing_id}\n`
+    if(listing_id % 100000 === 0){
+      console.log(listing_id);
+    }
+    const promise = write(stream2, data);
+    if (promise) {
+      await promise
+    }
+    listing_id += 1;
   }
 }
 
-// createListings();
+// run();
+createListings();
 // generatePhoto();
 
 
@@ -117,6 +88,7 @@ let createListings = async () => {
 // COPY photos FROM { 'test.csv' | PROGRAM 'command' | STDIN } [ [USING] DELIMITERS '|' ]
 
 // COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/test.csv' DELIMITERS '|';
+// COPY listings FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv' DELIMITERS '|';
 
 
 
