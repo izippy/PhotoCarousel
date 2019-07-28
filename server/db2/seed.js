@@ -1,8 +1,25 @@
 const db = require('./index');
 const faker = require('faker');
-const unsplash = require('../db/unsplashHelper');
 const fs = require('fs');
-// let stream = fs.createWriteStream('test.csv');
+
+let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY,\
+                   listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, \
+                   tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
+let listingsSchema = "CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY)";
+let userSchema = "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, listing_id integer\
+                    REFERENCES listings(id), firstName text NOT NULL, lastName text NOT NULL,\
+                     likedHomes integer REFERENCES users(listing_id)[])";
+
+db.query(listingsSchema, (err, res) => {
+  console.log(err, res);
+  db.end();
+});
+
+db.query(photosSchema, (err, res) => {
+    console.log(err, res);
+  db.end();
+});
+
 
 const write = (writer, data) => {
   if (!writer.write(data)) {
@@ -12,28 +29,27 @@ const write = (writer, data) => {
   }
 }
 
-const run = () => {
+const createPhotos = async () => {
   const stream = fs.createWriteStream('photos.csv')
   const max = 10000000
   let listing_id = 1
   let i = 0;
   let randomNumber;
-  unsplash.getImages('house', async (err, houseData) => {
   while (listing_id <= max) {
     if(listing_id <= 9000000){
-      randomNumber = Math.floor(Math.random() * (3 - 2) + 2);
+      randomNumber = Math.floor(Math.random() * (3)) + 1;
     }else if (listing_id > 9000000 && listing_id <= 9500000){
       randomNumber = Math.floor(Math.random() * (11 - 7) + 7);
     }else if (listing_id > 9500000 && listing_id <= 9700000){
       randomNumber = Math.floor(Math.random() * (16 - 10) + 10);
     }else if (listing_id > 9700000) {
-      randomNumber = Math.floor(Math.random() & (26 - 15) + 15);
+      randomNumber = Math.floor(Math.random() * (26 - 15) + 15);
     }
         
         for (let priority = 0; priority < randomNumber; priority++) {
-          let randomImage =  Math.floor(Math.random() * Math.floor(26));
-          const photoUrl = houseData.results[randomImage].urls.regular;
-          const tinyPhotoUrl = houseData.results[randomImage].urls.thumb;
+          let randomImage =  Math.floor(Math.random() * Math.floor(399)) + 1;
+          const photoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/largeImages/HouseImg${randomImage}.jpg`;
+          const tinyPhotoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/smallImages/SmallHouseImg${randomImage}.jpg`;
           const caption = faker.lorem.sentence(5);
           i++;
           let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
@@ -47,7 +63,6 @@ const run = () => {
         }
         listing_id += 1;
   }
-});
 }
 
 
@@ -69,19 +84,29 @@ let createListings = async () => {
   }
 }
 
-run();
 // createListings();
+// createPhotos();
+
+// let seedListings = () => {
+  // return `pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv | psql -U guestly -d mydb -c "COPY listings FROM STDIN DELIMITERS '|';"`
+// }
+
+// let seedPhotos = () => {
+//   return `pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv | psql -U guestly -d mydb -c "COPY photos FROM STDIN DELIMITERS '|';"`
+// }
+
+// seedListings();
+// seedPhotos();
 
 
 // 1 | 1 | URL | OTHERURL | some string. | 1
 
-// delimiter = bar
-
 // COPY photos FROM { 'test.csv' | PROGRAM 'command' | STDIN } [ [USING] DELIMITERS '|' ]
 
-// COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/test.csv' DELIMITERS '|';
+// pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv | psql -U guestly -d mydb -c "COPY photos FROM STDIN DELIMITERS '|';"
+
+// COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv' DELIMITERS '|';
 // COPY listings FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv' DELIMITERS '|';
 
-
-
-//  100000 |  6828 |  https://images.unsplash.com/photo-1506126279646-a697353d3166?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjgzMTc3fQ  |  https://images.unsplash.com/photo-1506126279646-a697353d3166?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjgzMTc3fQ  |  Non facilis excepturi qui dolor.  |        9
+// CREATE THE INDEX TO SPEED UP THE QUERY TIMES YAHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!
+// CREATE INDEX index_id_priority_listings ON photos (id, listing_id, priority);

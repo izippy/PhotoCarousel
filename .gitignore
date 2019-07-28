@@ -6,3 +6,8 @@ unsplashAPI.js
 photos.csv
 listings.csv
 cassandraTest.csv
+cassandraListingsOneMillion.csv
+cassandraListings.csv
+cassandraPhotos.csv
+
+photos
