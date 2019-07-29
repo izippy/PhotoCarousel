@@ -1,8 +1,6 @@
-const db = require('./index');
 const faker = require('faker');
-// const unsplash = require('../db/unsplashHelper');
 const fs = require('fs');
-const sslWriter = require('org.apache.cassandra.io.sstable.CQLSSTableWriter');
+// const sslWriter = require('org.apache.cassandra.io.sstable.CQLSSTableWriter');
 // const uuidv4 = require('uuid/v4');
 
 // const query = "INSERT INTO testing (id, photourl, tinyurl, description, priority) values (now(), 'oihoi', 'sldkfjlksd', 'sldkhoisghois', 2);"
@@ -18,7 +16,7 @@ const write = (writer, data) => {
   }
 }
 
-const run = async () => {
+const createPhotos = async () => {
   const stream = fs.createWriteStream('cassandraPhotos.csv')
   const max = 10000000
   let listing_id = 1
@@ -54,27 +52,27 @@ const run = async () => {
   }
 }
 
-let createListings = async () => {
-  const stream2 = fs.createWriteStream('cassandraListingsOneMillion.csv')
-  const max = 1000000
-  let listing_id = 1
-  let i = 0;
-  while(listing_id <= max){
-    let data = `${listing_id}\n`
-    if(listing_id % 100000 === 0){
-      console.log(listing_id);
-    }
-    const promise = write(stream2, data);
-    if (promise) {
-      await promise
-    }
-    listing_id += 1;
-  }
-}
+// let createListings = async () => {
+//   const stream2 = fs.createWriteStream('cassandraListingsOneMillion.csv')
+//   const max = 1000000
+//   let listing_id = 1
+//   let i = 0;
+//   while(listing_id <= max){
+//     let data = `${listing_id}\n`
+//     if(listing_id % 100000 === 0){
+//       console.log(listing_id);
+//     }
+//     const promise = write(stream2, data);
+//     if (promise) {
+//       await promise
+//     }
+//     listing_id += 1;
+//   }
+// }
 
 
-createListings();
-// run();
+// createPhotos();
+
 
 
 // db.query
@@ -83,5 +81,11 @@ createListings();
 
 // ALTER TABLE listings WITH compression = {'sstable_compression': 'LZ4Compressor', 'chunk_length_kb': 64};
 
-
+// cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv -host localhost -schema "guestly.photos(id, listing_id, photourl, tinyurl, caption, priority)" -delim "|"
+// ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv -host localhost -schema "guestly.listings(id)"
 // csv2sstable guestly listings /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/schema.cql /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv /Users/amar/Desktop/testSStables
+
+
+// USING CASSIE LOADER
+  // where cassandra-loader was built type
+    // ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv -host localhost -schema "guestly.photos(id, listing_id, photourl, tinyurl, caption, priority)" -delim "|"

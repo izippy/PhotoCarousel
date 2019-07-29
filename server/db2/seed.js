@@ -102,7 +102,9 @@ let createListings = async () => {
 // 1 | 1 | URL | OTHERURL | some string. | 1
 
 // COPY photos FROM { 'test.csv' | PROGRAM 'command' | STDIN } [ [USING] DELIMITERS '|' ]
-
+// ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv -host localhost -schema "guestly.listings(id)"
+// pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.listings(id)"
+// pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.photos(id, listing_id, photoUrl, tinyUrl, caption, priority)" -delim "|"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv | psql -U guestly -d mydb -c "COPY photos FROM STDIN DELIMITERS '|';"
 
 // COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv' DELIMITERS '|';
@@ -110,3 +112,11 @@ let createListings = async () => {
 
 // CREATE THE INDEX TO SPEED UP THE QUERY TIMES YAHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!
 // CREATE INDEX index_id_priority_listings ON photos (id, listing_id, priority);
+// CREATE INDEX index_photos ON photos USING btree (listing_id, priority DESC);
+  // speed => 0.042 ms
+// CREATE INDEX index_photos ON photos USING btree (listing_id, priority ASC);
+  // speed =>
+// CREATE INDEX index_photos ON photos USING btree (listing_id DESC, priority);
+  // speed => 
+// CREATE INDEX index_photos ON photos USING btree (listing_id ASC, priority);
+  // speed => 

@@ -210,7 +210,7 @@ class App extends React.Component {
           ? (
             <ProfilePicture
               photo={photos[0].photoUrl}
-              tinyPhoto={photos[0].tinyPhotoUrl}
+              tinyPhoto={photos[0].tinyphotoUrl}
               hoverHandler={this.hoverHandler}
               clickHandler={this.clickHandler}
               totalWidth={windowWidth}
@@ -227,7 +227,7 @@ class App extends React.Component {
           ? (
             <SubPictures
               photos={[photos[1].photoUrl, photos[2].photoUrl]}
-              tinyPhotos={[photos[1].tinyPhotoUrl, photos[2].tinyPhotoUrl]}
+              tinyPhotos={[photos[1].tinyphotoUrl, photos[2].tinyphotoUrl]}
               totalWidth={windowWidth}
               totalHeight={windowHeight}
               opacityTwo={photoTwoOpacity}
@@ -243,7 +243,7 @@ class App extends React.Component {
           ? (
             <ExtraPictures
               photos={[photos[3].photoUrl, photos[4].photoUrl]}
-              tinyPhotos={[photos[3].tinyPhotoUrl, photos[4].tinyPhotoUrl]}
+              tinyPhotos={[photos[3].tinyphotoUrl, photos[4].tinyphotoUrl]}
               totalWidth={windowWidth}
               totalHeight={windowHeight}
               opacityFour={photoFourOpacity}

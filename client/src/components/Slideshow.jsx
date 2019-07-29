@@ -242,14 +242,14 @@ class Slideshow extends React.Component {
                                         element.priority === currIndex
                                           ? (
                                             <li className={styles.miniFocus} key={element.priority}>
-                                              <button index="0" className={styles.miniFocusButton} aria-label={`1/${photos.length}: ${photos[element.priority].caption}`}>
+                                              <button index="0" className={styles.miniFocusButton} aria-label={`1/${photos.length}: ${photos[element.priority].description}`}>
                                                 <img alt="" src={photos[element.priority].photoUrl} className={styles.miniImage} />
                                               </button>
                                             </li>
                                           )
                                           : (
                                             <li className={styles.miniEntry} key={element.priority} onClick={this.changeFocus}>
-                                              <button index={element.priority} className={styles.miniEntryButton} aria-label={`${element.priority}/${photos.length}: ${photos[element.priority].caption}`}>
+                                              <button index={element.priority} className={styles.miniEntryButton} aria-label={`${element.priority}/${photos.length}: ${photos[element.priority].description}`}>
                                                 <img alt="" src={photos[element.priority].photoUrl} index={element.priority} className={styles.miniImage} />
                                               </button>
                                             </li>
@@ -270,7 +270,7 @@ class Slideshow extends React.Component {
                           </div>
                           <div className={styles.captionContainer}>
                             <div className={styles.caption}>
-                              {photos[currIndex].caption}
+                              {photos[currIndex].description}
                             </div>
                           </div>
                         </div>
