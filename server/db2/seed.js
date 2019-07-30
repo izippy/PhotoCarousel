@@ -2,23 +2,20 @@ const db = require('./index');
 const faker = require('faker');
 const fs = require('fs');
 
-let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY,\
-                   listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, \
-                   tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
-let listingsSchema = "CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY)";
-let userSchema = "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, listing_id integer\
-                    REFERENCES listings(id), firstName text NOT NULL, lastName text NOT NULL,\
-                     likedHomes integer REFERENCES users(listing_id)[])";
+// let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
+// let listingsSchema = "CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY)";
+// 
+// let userSchema = "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), firstName text NOT NULL, lastName text NOT NULL, likedHomes integer REFERENCES users(listing_id)[])";
 
-db.query(listingsSchema, (err, res) => {
-  console.log(err, res);
-  db.end();
-});
+// db.query(listingsSchema, (err, res) => {
+//   console.log(err, res);
+//   db.end();
+// });
 
-db.query(photosSchema, (err, res) => {
-    console.log(err, res);
-  db.end();
-});
+// db.query(photosSchema, (err, res) => {
+//     console.log(err, res);
+//   db.end();
+// });
 
 
 const write = (writer, data) => {
@@ -30,7 +27,7 @@ const write = (writer, data) => {
 }
 
 const createPhotos = async () => {
-  const stream = fs.createWriteStream('photos.csv')
+  const stream = fs.createWriteStream('photos_noDelim.csv')
   const max = 10000000
   let listing_id = 1
   let i = 0;
@@ -52,7 +49,7 @@ const createPhotos = async () => {
           const tinyPhotoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/smallImages/SmallHouseImg${randomImage}.jpg`;
           const caption = faker.lorem.sentence(5);
           i++;
-          let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
+          let data = `${i}|${listing_id}|${photoUrl}|${tinyPhotoUrl}|${caption}|${priority}\n`
           if(listing_id % 100000 === 0){
             console.log(listing_id);
           }
@@ -85,7 +82,7 @@ let createListings = async () => {
 }
 
 // createListings();
-// createPhotos();
+createPhotos();
 
 // let seedListings = () => {
   // return `pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv | psql -U guestly -d mydb -c "COPY listings FROM STDIN DELIMITERS '|';"`
@@ -106,6 +103,7 @@ let createListings = async () => {
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.listings(id)"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.photos(id, listing_id, photoUrl, tinyUrl, caption, priority)" -delim "|"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv | psql -U guestly -d mydb -c "COPY photos FROM STDIN DELIMITERS '|';"
+// pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos_noDelim.csv | psql -U guestly -d mydb -c "COPY photosTest FROM STDIN DELIMITERS '|';"
 
 // COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv' DELIMITERS '|';
 // COPY listings FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv' DELIMITERS '|';

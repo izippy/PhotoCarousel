@@ -31,7 +31,6 @@ class App extends React.Component {
       photoFiveOpacity: 1,
       hoverFour: false,
       hoverFive: false,
-
     };
 
     this.getListingPhotos = this.getListingPhotos.bind(this);
@@ -209,8 +208,8 @@ class App extends React.Component {
         {photos.length > 0
           ? (
             <ProfilePicture
-              photo={photos[0].photoUrl}
-              tinyPhoto={photos[0].tinyphotoUrl}
+              photo={photos[0].photourl}
+              tinyPhoto={photos[0].tinyphotourl}
               hoverHandler={this.hoverHandler}
               clickHandler={this.clickHandler}
               totalWidth={windowWidth}
@@ -226,8 +225,8 @@ class App extends React.Component {
         {photos.length >= 3 && currWidth > lastThreshold
           ? (
             <SubPictures
-              photos={[photos[1].photoUrl, photos[2].photoUrl]}
-              tinyPhotos={[photos[1].tinyphotoUrl, photos[2].tinyphotoUrl]}
+              photos={[photos[1].photourl, photos[2].photourl]}
+              tinyPhotos={[photos[1].tinyphotourl, photos[2].tinyphotourl]}
               totalWidth={windowWidth}
               totalHeight={windowHeight}
               opacityTwo={photoTwoOpacity}
@@ -242,8 +241,8 @@ class App extends React.Component {
         {photos.length >= 5 && currWidth > threshold
           ? (
             <ExtraPictures
-              photos={[photos[3].photoUrl, photos[4].photoUrl]}
-              tinyPhotos={[photos[3].tinyphotoUrl, photos[4].tinyphotoUrl]}
+              photos={[photos[3].photourl, photos[4].photourl]}
+              tinyPhotos={[photos[3].tinyphotourl, photos[4].tinyphotourl]}
               totalWidth={windowWidth}
               totalHeight={windowHeight}
               opacityFour={photoFourOpacity}

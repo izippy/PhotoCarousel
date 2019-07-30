@@ -21,7 +21,7 @@ const getPhotos = (req, res) => {
   const { listingID } = req.params;
   console.log(req.params);
 
-  pool.query(`SELECT * FROM photos WHERE listing_id = ${listingID} AND priority <= 4`, (err, results) => {
+  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority <= 4`, (err, results) => {
     if (err) {
       console.log(err);
     }
@@ -32,7 +32,7 @@ const getPhotos = (req, res) => {
 const getMorePhotos = (req, res) => {
   const { listingID } = req.params;
 
-  pool.query(`SELECT * FROM photos WHERE listing_id = ${listingID} AND priority >= 5`, (err, results) => {
+  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority >= 5`, (err, results) => {
     if(err){
       console.log(err);
     }

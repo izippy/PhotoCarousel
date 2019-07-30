@@ -14,8 +14,6 @@ const port = 3002;
 app.use(morgan('tiny'));
 app.use(bodyParser.urlencoded({ extended: false}));
 
-// app.use(express.static('public'));
-
 app.use('/', expressStaticGzip(path.resolve(__dirname, './public/dist'), {
   enableBrotli: true,
   orderPreference: ['br', 'gz'],
@@ -25,6 +23,7 @@ app.use('/', expressStaticGzip(path.resolve(__dirname, './public/dist'), {
 }));
 
 app.use('/:listingID', expressStaticGzip(path.resolve(__dirname, './public/dist'), {
+  index: false,
   enableBrotli: true,
   orderPreference: ['br', 'gz'],
   setHeaders(res, path) {
@@ -32,13 +31,12 @@ app.use('/:listingID', expressStaticGzip(path.resolve(__dirname, './public/dist'
   },
 }));
 
-// app.use('/', express.static(path.resolve(__dirname, 'public', 'dist')));
-// app.use('/photoGallery/:listingID', express.static(path.resolve(__dirname, 'public', 'dist')));
-
 app.get('/api/listings/info/:listingID', db2.getListings);
 app.get('/api/listings/photos/initial/:listingID', db2.getPhotos);
 app.get('/api/listings/photos/:listingID', db2.getMorePhotos);
 
+// app.get('/api/users/:userID', db2.getUserId);
+// app.get('/api/users/lists/:userID/:listTitle', db2.getuserId);
 
 // ****************** RE COMMENT LATER ****************** //
 
@@ -110,6 +108,9 @@ app.get('/api/listings/photos/:listingID', db2.getMorePhotos);
 //   // }).then(result => res.send(result))
 //   //   .catch(err => res.send(err));
 // });
+
+// CREATE INDEX <index name> ON photos (listing_id, priorities);
+// CREATE INDEX <index name> ON photos (priorities);
 
 
 // *********** SOMEWHAT USELESS RIGHT NOW ************* //

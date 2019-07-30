@@ -9,5 +9,7 @@ cassandraTest.csv
 cassandraListingsOneMillion.csv
 cassandraListings.csv
 cassandraPhotos.csv
+photosTest.csv
+photos_noDelim.csv
 
 photos
