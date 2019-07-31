@@ -1,13 +1,6 @@
 const faker = require('faker');
 const fs = require('fs');
-// const sslWriter = require('org.apache.cassandra.io.sstable.CQLSSTableWriter');
-// const uuidv4 = require('uuid/v4');
 
-// const query = "INSERT INTO testing (id, photourl, tinyurl, description, priority) values (now(), 'oihoi', 'sldkfjlksd', 'sldkhoisghois', 2);"
-// let id = 'CREATE TABLE photos (id int, listing_id int, photourl text, tinyurl text, description text, priority int, PRIMARY KEY (id));'
-// COPY photos(id, listing_id, photourl, tinyurl, description, priority) FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv' WITH DELIMITER = '|';
-// CREATE TABLE listings (id int, PRIMARY KEY (id));
-// COPY listings(id) FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListings.csv' WITH DELIMITER = '|';
 const write = (writer, data) => {
   if (!writer.write(data)) {
       return new Promise((resolve) => {
@@ -73,8 +66,6 @@ const createPhotos = async () => {
 
 // createPhotos();
 
-
-
 // db.query
 
 // COPY listings (id, photourl, tinyurl, description, priority) FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListings.csv' WITH DELIMITER = '|';
@@ -85,10 +76,13 @@ const createPhotos = async () => {
 // ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv -host localhost -schema "guestly.listings(id)"
 // csv2sstable guestly listings /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/schema.cql /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv /Users/amar/Desktop/testSStables
 
-
 // USING CASSIE LOADER
   // where cassandra-loader was built type
     // ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv -host localhost -schema "guestly.photos(id, listing_id, photourl, tinyurl, caption, priority)" -delim "|"
 
-
 //  28f9c330-b247-11e9-b8b8-8f588e4ffa59 | 127.0.0.1 |   QUERY |   127.0.0.1 |     2864 | {'consistency_level': 'ONE', 'page_size': '100', 'query': 'SELECT * FROM photos;', 'serial_consistency_level': 'SERIAL'} | Execute CQL3 query | 2019-07-29 21:23:51.139000+0000
+
+// COPY photos(id, listing_id, photourl, tinyurl, description, priority) FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv' WITH DELIMITER = '|';
+// CREATE TABLE listings (id int, PRIMARY KEY (id));
+// COPY listings(id) FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListings.csv' WITH DELIMITER = '|';
+

@@ -215,7 +215,7 @@ class Slideshow extends React.Component {
                           <img className={styles.hiddenPicture} aria-hidden="true" src={photos[currIndex].photoUrl} alt="" />
                           <div>
                             <img
-                              src={photos[currIndex].photoUrl}
+                              src={photos[currIndex].photourl}
                               alt=""
                               id="mainPicture"
                               onClick={this.nextPictureHandler}
@@ -242,16 +242,16 @@ class Slideshow extends React.Component {
                                         element.priority === currIndex
                                           ? (
                                             <li className={styles.miniFocus} key={element.priority}>
-                                              <button index="0" className={styles.miniFocusButton} aria-label={`1/${photos.length}: ${photos[element.priority].description}`}>
-                                                <img alt="" src={photos[element.priority].photoUrl} className={styles.miniImage} />
-                                              </button>
+                                              <div index="0" className={styles.miniFocusButton} aria-label={`1/${photos.length}: ${photos[element.priority].description}`}>
+                                                <img src={photos[element.priority].photourl} alt="" className={styles.miniImage} />
+                                              </div>
                                             </li>
                                           )
                                           : (
                                             <li className={styles.miniEntry} key={element.priority} onClick={this.changeFocus}>
-                                              <button index={element.priority} className={styles.miniEntryButton} aria-label={`${element.priority}/${photos.length}: ${photos[element.priority].description}`}>
-                                                <img alt="" src={photos[element.priority].photoUrl} index={element.priority} className={styles.miniImage} />
-                                              </button>
+                                              <div index={element.priority} className={styles.miniEntryButton} aria-label={`${element.priority}/${photos.length}: ${photos[element.priority].description}`}>
+                                                <img src={photos[element.priority].photourl} alt="" index={element.priority} className={styles.miniImage} />
+                                              </div>
                                             </li>
                                           )
                                       ))}
