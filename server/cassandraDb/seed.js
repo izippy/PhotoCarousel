@@ -1,16 +1,18 @@
 const faker = require('faker');
 const fs = require('fs');
+const Uuid = require('cassandra-driver').types.Uuid;
 
 const write = (writer, data) => {
   if (!writer.write(data)) {
-      return new Promise((resolve) => {
-          writer.once('drain', resolve);
-      })
+    return new Promise((resolve) => {
+      writer.once('drain', resolve);
+    })
   }
 }
 
 const createPhotos = async () => {
-  const stream = fs.createWriteStream('cassandraPhotos.csv')
+  const stream = fs.createWriteStream('cassandraPhotosLessPriority.csv');
+  const stream2 = fs.createWriteStream('cassandraPhotosGreaterPriority.csv');
   const max = 10000000
   let listing_id = 1
   let i = 0;
@@ -25,20 +27,28 @@ const createPhotos = async () => {
     }else if (listing_id > 9700000) {
       randomNumber = Math.floor(Math.random() * (26 - 15) + 15);
     }
-        
-        for (let priority = 0; priority < randomNumber; priority++) {
+    
+    for (let priority = 0; priority < randomNumber; priority++) {
+          const id = Uuid.random();
           let randomImage =  Math.floor(Math.random() * Math.floor(399)) + 1;
           const photoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/largeImages/HouseImg${randomImage}.jpg`;
           const tinyPhotoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/smallImages/SmallHouseImg${randomImage}.jpg`;
           const caption = faker.lorem.sentence(5);
           i++;
-          let data = `${i} | ${listing_id} | ${photoUrl} | ${tinyPhotoUrl} | ${caption} | ${priority} \n`
+          let data = `${id}|${listing_id}|${photoUrl}|${tinyPhotoUrl}|${caption}|${priority}\n`
           if(listing_id % 100000 === 0){
             console.log(listing_id);
           }
-          const promise = write(stream, data);
-          if (promise) {
-            await promise
+          if(priority <= 4){
+            const promise = write(stream, data);
+            if (promise) {
+              await promise
+            }
+          }else if (priority >= 5){
+            promise = write(stream2, data);
+            if (promise) {
+              await promise
+            }
           }
         }
         listing_id += 1;
@@ -46,25 +56,25 @@ const createPhotos = async () => {
 }
 
 // let createListings = async () => {
-//   const stream2 = fs.createWriteStream('cassandraListingsOneMillion.csv')
-//   const max = 1000000
-//   let listing_id = 1
-//   let i = 0;
-//   while(listing_id <= max){
-//     let data = `${listing_id}\n`
-//     if(listing_id % 100000 === 0){
-//       console.log(listing_id);
-//     }
-//     const promise = write(stream2, data);
-//     if (promise) {
-//       await promise
-//     }
-//     listing_id += 1;
-//   }
-// }
+  //   const stream2 = fs.createWriteStream('cassandraListingsOneMillion.csv')
+  //   const max = 1000000
+  //   let listing_id = 1
+  //   let i = 0;
+  //   while(listing_id <= max){
+    //     let data = `${listing_id}\n`
+    //     if(listing_id % 100000 === 0){
+      //       console.log(listing_id);
+      //     }
+      //     const promise = write(stream2, data);
+      //     if (promise) {
+        //       await promise
+        //     }
+        //     listing_id += 1;
+        //   }
+        // }
+        
+createPhotos();
 
-
-// createPhotos();
 
 // db.query
 

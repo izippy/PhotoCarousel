@@ -12,5 +12,9 @@ cassandraPhotos.csv
 photosTest.csv
 photos_noDelim.csv
 listingsReal.csv
+cassandraPhotos.csv
+cassandraPhotos2.csv
+cassandraPhotosGreaterPriority.csv
+cassandraPhotosLessPriority.csv
 
 photos
