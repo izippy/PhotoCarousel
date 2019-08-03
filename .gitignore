@@ -2,6 +2,7 @@ node_modules
 coverage
 
 unsplashAPI.js
+newRelicKey.js
 
 photos.csv
 listings.csv

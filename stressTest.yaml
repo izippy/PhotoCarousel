@@ -1,0 +1,10 @@
+config:
+  target: 'http://localhost:3002'
+  pattern: "[1-10000000]+"
+  phases:
+    - duration: 120
+      arrivalRate: 700
+scenarios:
+  - flow:
+    - get:
+        url: "/:id"

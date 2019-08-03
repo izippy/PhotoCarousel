@@ -125,6 +125,7 @@ let createListings = async () => {
 // ./cassandra-loader -f /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv -host localhost -schema "guestly.listings(id)"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraListingsOneMillion.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.listings(id)"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotos.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.photos(id, listing_id, photoUrl, tinyUrl, caption, priority)" -delim "|"
+// pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/cassandraDb/cassandraPhotosLessPriority.csv | ./cassandra-loader -f STDIN -host localhost -schema "guestly.photosLessPriority(id, listing_id, photoUrl, tinyUrl, caption, priority)" -delim "|"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv | psql -U guestly -d mydb -c "COPY photos FROM STDIN DELIMITERS '|';"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos_noDelim.csv | psql -U guestly -d mydb -c "COPY photosTest FROM STDIN DELIMITERS '|';"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/db2/listingsReal.csv | psql -U guestly -d mydb -c "COPY listingsReal FROM STDIN DELIMITERS '|';"
