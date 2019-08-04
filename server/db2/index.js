@@ -7,78 +7,41 @@ const pool = new Pool({
   database: 'mydb'
 });
 
-// const getListings = (req, res) => {
-//   const { listingID } = req.params;
-//   let redisKey = `listingID:${listingID}`;
-//   // pool.query(`SELECT * FROM listingsreal WHERE id = ${listingID}`, (err, results) => {
-//   //   if (err) {
-//   //     console.log(err);
-//   //   } else {
-//   //     res.json(results.rows);
-//   //     client.set(redisKey, results.rows, 'EX', 30);
-//   //   }
-//   // });
-//   client.get(redisKey, (err, results) => {
-//     if (results) {
-//       res.status(201).json({ source: 'cache', data: JSON.parse(results) })
-//     } else { 
-//       pool.query(`SELECT * FROM listingsreal WHERE id = ${listingID}`, (err, results) => {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           console.log("MARRVINNNN");
-//           client.set(redisKey, JSON.stringify(results.rows), 'EX', 10);
-//           res.json(results.rows)
-//         }
-//       });
-//     }
-//   });
+const getListings = (req, res) => {
+  const { listingID } = req.params;
+  pool.query(`SELECT * FROM listingsreal WHERE id = ${listingID}`, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(results.rows);
+      client.set(redisKey, results.rows, 'EX', 30);
+    }
+  });
+}
 
-// }
+const getPhotos = (req, res) => {
+  const { listingID } = req.params;
 
-// const getPhotos = (req, res) => {
-//   const { listingID } = req.params;
-//   // const photosRedisKey = `photosLessPriority:${listingID}`;
-//   // client.get(photosRedisKey, (err, photos) => {
-//   //   if (photos) {
-//   //     console.log('hereeee2');
-//   //     res.status(201).json({ source: 'cache', data: JSON.parse(photos) })
-//   //   } else { 
-//   //     console.log("W:KJAL:SKJF");
-//   //     pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority <= 4 ORDER BY priority ASC`, (err, results) => {
-//   //       if (err) {
-//   //         console.log(err);
-//   //       } else {
-//   //         client.set(photosRedisKey, JSON.stringify(results.rows), 'EX', 10);
-//   //         res.json(results.rows)
-//   //       }
-//   //     });
-//   //   }
-//   // });
+  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority <= 4 ORDER BY priority ASC`, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).json(results.rows)
+    }
+  })
+}
 
-//   let redisKey = `photosid:${listingID}`;
+const getMorePhotos = (req, res) => {
+  const { listingID } = req.params;
 
-//   pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority <= 4 ORDER BY priority ASC`, (err, results) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.status(200).json(results.rows)
-//     }
-//   })
-// }
-
-// const getMorePhotos = (req, res) => {
-//   const { listingID } = req.params;
-//   let redisKey = `otherPhotosID:${listingID}`;
-
-//   pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority >= 5 ORDER BY priority ASC`, (err, results) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.status(200).json(results.rows)
-//     }
-//   })
-// }
+  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority >= 5 ORDER BY priority ASC`, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.status(200).json(results.rows)
+    }
+  })
+}
 
 // const deleteItem = (req, res) => {
 //   const { listingId } = req.params;
@@ -114,4 +77,10 @@ const insertItem = (req, res) => {
   })
 }
 
-module.exports = pool;
+module.exports = {
+  pool,
+  getListings,
+  getPhotos,
+  getMorePhotos,
+  insertItem,
+};

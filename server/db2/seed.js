@@ -2,7 +2,7 @@ const db = require('./index');
 const faker = require('faker');
 const fs = require('fs');
 
-// let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), photoUrl text NOT NULL, tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
+// let photosSchema = "CREATE TABLE IF NOT EXISTS photos (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listingsReal(id), photoUrl text NOT NULL, tinyPhotoUrl text NOT NULL, description text NOT NULL, priority INTEGER)";
 // let listingsSchema = "CREATE TABLE IF NOT EXISTS listings (id SERIAL PRIMARY KEY)";
 // INSERT INTO photos (10000001, 800, 'testing', 'testing2', 'testing3', 5);
 // let userSchema = "CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY, listing_id integer REFERENCES listings(id), firstName text NOT NULL, lastName text NOT NULL, likedHomes integer REFERENCES users(listing_id)[])";
@@ -130,8 +130,11 @@ let createListings = async () => {
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos_noDelim.csv | psql -U guestly -d mydb -c "COPY photosTest FROM STDIN DELIMITERS '|';"
 // pv /Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/server/db2/listingsReal.csv | psql -U guestly -d mydb -c "COPY listingsReal FROM STDIN DELIMITERS '|';"
 
-// COPY photos FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/photos.csv' DELIMITERS '|';
-// COPY listings FROM '/Users/amar/Documents/hrsf119/SDC/PhotoCarousel-1/listings.csv' DELIMITERS '|';
+// EC2 SERVER
+
+// \copy photos FROM '/home/ec2-user/PhotoCarousel-1/server/db2/photos_noDelim.csv' DELIMITERS '|' WITH CSV;
+// \copy listingsReal FROM '/home/ec2-user/PhotoCarousel-1/server/db2/listingsReal.csv' DELIMITERS '|' WITH CSV;
+
 
 // CREATE THE INDEX TO SPEED UP THE QUERY TIMES YAHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!
 // CREATE INDEX index_id_priority_listings ON photos (id, listing_id, priority);
