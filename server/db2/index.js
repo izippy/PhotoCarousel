@@ -1,20 +1,30 @@
 const { Pool } = require('pg');
+const faker = require('faker');
 const client = require('../redis/index');
+
+// const pool = new Pool({
+//   user: 'guestly',
+//   host: '52.53.249.156',
+//   database: 'mydb',
+//   password: 'password'
+// });
+
 
 const pool = new Pool({
   user: 'guestly',
   host: 'localhost',
-  database: 'mydb'
+  database: 'mydb',
+  password: 'password'
 });
 
 const getListings = (req, res) => {
   const { listingID } = req.params;
+
   pool.query(`SELECT * FROM listingsreal WHERE id = ${listingID}`, (err, results) => {
     if (err) {
       console.log(err);
     } else {
       res.json(results.rows);
-      client.set(redisKey, results.rows, 'EX', 30);
     }
   });
 }
@@ -22,7 +32,7 @@ const getListings = (req, res) => {
 const getPhotos = (req, res) => {
   const { listingID } = req.params;
 
-  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority <= 4 ORDER BY priority ASC`, (err, results) => {
+  pool.query(`SELECT * FROM photos WHERE listing_id = ${listingID} AND priority <= 4 ORDER BY priority ASC`, (err, results) => {
     if (err) {
       console.log(err);
     } else {
@@ -34,7 +44,7 @@ const getPhotos = (req, res) => {
 const getMorePhotos = (req, res) => {
   const { listingID } = req.params;
 
-  pool.query(`SELECT * FROM photosTest WHERE listing_id = ${listingID} AND priority >= 5 ORDER BY priority ASC`, (err, results) => {
+  pool.query(`SELECT * FROM photos WHERE listing_id = ${listingID} AND priority >= 5 ORDER BY priority ASC`, (err, results) => {
     if (err) {
       console.log(err);
     } else {
@@ -67,12 +77,15 @@ const getMorePhotos = (req, res) => {
 
 const insertItem = (req, res) => {
   // const { listingID } = req.params;
-
-  pool.query(`INSERT INTO photos (id, listing_id, photourl, tinyphotourl, description, priority) VALUES (40000001, 800, 'testing', 'testing2', 'testing3', 5)`, (err, results) => {
+  let randomListingID = Math.floor(Math.random() * (20000000 - 10000001)) + 10000001;
+  let photoUrl = `https://sdcimages123.s3-us-west-1.amazonaws.com/largeImages/HouseImg10.jpg`;
+  let description = faker.lorem.sentence(5);
+  let priority = Math.floor(Math.random() * (26 - 10)) + 10;
+  pool.query(`INSERT INTO photos (listing_id, photourl, tinyphotourl, description, priority) VALUES (${randomListingID}, ${photoUrl}, ${photoUrl}, ${description}, ${priority})`, (err, results) => {
     if(err){
       console.log(err);
     } else {
-      res.status(200).send(results);
+      res.status(201).send(results);
     }
   })
 }

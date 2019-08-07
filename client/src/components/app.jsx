@@ -53,7 +53,7 @@ class App extends React.Component {
   getListingPhotos() {
     const parts = window.location.href.split('/');
     const id = parts[parts.length - 2];
-
+    
     axios.get(`/api/listings/photos/initial/${id}`)
       .then((response) => {
         this.setState({

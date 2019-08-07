@@ -23,7 +23,7 @@ module.exports = {
   entry: path.resolve(__dirname, 'client/src/index.jsx'),
   output: {
     path: path.resolve(__dirname, './public/dist/bundle'),
-    filename: 'webpackBundle.js',
+    filename: 'webpackBundle4.js',
   },
   module: {
     rules: [

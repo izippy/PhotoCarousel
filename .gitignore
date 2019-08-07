@@ -5,9 +5,14 @@ aws-actions.js
 
 unsplashAPI.js
 newRelicKey.js
+loaderio-a18f36c9a9ff4a8968b503c3080efdab.txt
+loaderio-23bd61c54409897b75b453d0db74e30d.txt
+
+newrelic_agent.log
 
 guestly-photo-service.pem
 photo-gal.pem
+nginx-service.pem
 
 photos.csv
 listings.csv
