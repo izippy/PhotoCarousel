@@ -6,7 +6,6 @@
 
 ### CRUD - initial listings
 
-- **USE** | **USE**: /rooms/photoCarousel/:listingID | Rendering of service
 - **CREATE** | **POST**: /api/rooms/photos/initial/:listingID | create a new listings post
 - **READ** | **GET**: /api/rooms/photos/initial/:listingID | read all of the listings
 - **UPDATE** | **PUT**: /api/rooms/photos/initial/:listingID | update a existing listing
@@ -14,11 +13,16 @@
 
 ### CRUD -  prior listings
 
-- **USE** | **USE**: /rooms/photoCarousel/:listingID | Rendering of service
 - **CREATE** | **POST**: /api/rooms/photos/:listingID | create a new listings post
 - **READ** | **GET**: /api/rooms/photos/:listingID | read all of the listings
 - **UPDATE** | **PUT**: /api/rooms/photos/:listingID | update a existing listing
 - **DELETE** | **DELETE**: /api/rooms/photos/:listingID | delete a existing listing
+
+### CRUD - Save Listing
+- **CREATE** | **POST**: /api/users/:userID | Save listing when clicking heart icon
+- **READ** | **GET**: /api/users/:userID | Read all of saved listings
+- **UPDATE** | **PUT** /api/users/:userID | Update listing to toggle it on/off
+- **DELETE** | **DELETE** /api/users/:userID | Delete a saved listing from list of liked listings
 
 ## Related Projects
 

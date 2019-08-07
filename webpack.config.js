@@ -22,14 +22,14 @@ module.exports = {
   watch: true,
   entry: path.resolve(__dirname, 'client/src/index.jsx'),
   output: {
-    path: path.resolve(__dirname, './public/dist'),
-    filename: 'photoCarouselBundle.js',
+    path: path.resolve(__dirname, './public/dist/bundle'),
+    filename: 'webpackBundle4.js',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /photos/],
         loader: 'babel-loader',
         query: {
           presets: ['@babel/preset-react', '@babel/preset-env'],
